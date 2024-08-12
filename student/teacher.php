@@ -260,26 +260,32 @@
     <?php include 'student_sidebar.php'; ?>
 
     <div class="main content">
-    
-
         <div class="row">
             <div class="evaluation-form">
                 <h3>Evaluation Form</h3>
                 <br>
                 <form id="evaluationForm" method="post">
-                       <div class="input-container">
-                        <input type="text" id="input" required="">
-                        <label for="input" class="label">Name</label>
+                    <div class="input-container">
+                        <input type="text" id="name" required="">
+                        <label for="name" class="label">Name</label>
                         <div class="underline"></div>
-                        </div>
-                        <div class="input-container">
-                        <input type="text" id="input" required="">
-                        <label for="input" class="label">Dapartment & Year</label>
-                        <div class="underline"></div>
-                        </div>
-                    <?php include 'Teacher_list.php'; ?>
-                    <div id="dynamicFields">
                     </div>
+                    <div class="input-container">
+                        <input type="text" id="department" required="">
+                        <label for="department" class="label">Department & Year</label>
+                        <div class="underline"></div>
+                    </div>
+
+                    <!-- Teacher Dropdown -->
+                    <?php include 'Teacher_list.php'; ?>
+
+                    <!-- Subject Dropdown -->
+                    <select id="subjectDropdown" class="dropdown">
+                        <option value="">Select a Subject</option>
+                    </select>
+
+                    <div id="dynamicFields"></div>
+
                     <textarea name="questions" class="questions" id="questions" rows="8" placeholder="Type your comments here.." required></textarea>
                     <button class="btn" type="submit">Submit</button>
                 </form>
@@ -310,8 +316,28 @@
             xhr.send();
         }
 
-        // Load questions when the page loads
         window.onload = loadQuestions;
+
+        document.getElementById('teacherDropdown').addEventListener('change', function() {
+    var teacherId = this.value;
+    var subjectDropdown = document.getElementById('subjectDropdown');
+    subjectDropdown.innerHTML = '<option value="">Select a Subject</option>'; // Reset options
+
+    if (teacherId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'fetch_subjects.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                subjectDropdown.innerHTML = xhr.responseText;
+            } else {
+                console.error('Failed to load subjects.');
+            }
+        };
+        xhr.send('teacherId=' + encodeURIComponent(teacherId));
+    }
+});
+
     </script>
 </body>
 </html>

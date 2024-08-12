@@ -9,6 +9,57 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+     .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            padding: 10px 15px;
+            margin: 0 5px;
+            background-color: #f1f1f1;
+            color: #007bff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pagination a:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+
+
+        .form-group1 {
+            margin-bottom: 15px;
+        }
+
+        .rating-guidelines {
+            display: flex;
+            flex-direction: row-reverse;
+            margin-top: 10px;
+            padding: 20px 20px;
+      
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            margin: 19px;
+            font-family: cursive;
+        }
+
+        .rating-symbol {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
         .column4 {
             background-color: #f4f4f4;
             float: left;
@@ -21,15 +72,29 @@
             background-color: #f8f9fa;
             border: 2px solid rgba(0, 0, 0, 0.125);
             border-radius: 10px;
+            margin-right: 20px;
+        }
+        .column5 {
+            background-color: #f4f4f4;
+            float: left;
+            width: 865px;
+            padding: 20px;
+            box-sizing: border-box;
+            height: 35vh;
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #f8f9fa;
+            border: 2px solid rgba(0, 0, 0, 0.125);
+            border-radius: 10px;
+           
+        
         }
         .form-group {
             padding: 20px;
             margin-bottom: 20px;
             border: 2px black solid;
         }
-        .form-group1 {
-            padding: 10px;
-        }
+      
         .radio-group {
             display: flex;
             gap: 10px;
@@ -71,6 +136,7 @@
             margin-bottom: 20px;
             text-align: center;
             color: #333;
+            font-family: cursive;
         }
 
         .evaluation-form .form-group {
@@ -219,12 +285,13 @@
                 <div class="card4">
                 <form id="questionForm" action="save_questions.php" method="post">
                     <div class="form-group1">
-                        <select class="criteria" id="criteria" name="criteria" required>
-                            <option value="">Select Criteria</option>
-                            <option value="Criteria 101">Criteria 101</option>
-                            <option value="Criteria 102">Criteria 102</option>
-                    
-                        </select>
+                    <select class="criteria" id="criteria" name="criteria" required>
+                    <option value="">Select Criteria</option>
+                    <option value="Teaching Effectiveness">Teaching Effectiveness</option>
+                    <option value="Professionalism">Professionalism</option>
+                    <option value="Classroom Management">Classroom Management</option>
+                    <option value="Student Outcomes">Student Outcomes</option>
+                </select>
                     </div>
                     <br>
                     <div class="form-group1">
@@ -234,6 +301,39 @@
                 </form>
                 </div>
             </div>
+            <div class="column5">
+                <div class="card4">
+                    <form>
+                        <div class="form-group1">
+                            <label for="rating">Faculty Evaluation Rating:</label><br>
+                            <div class="rating-guidelines">
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating5">5 = Excellent</label>
+                                </div>
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating4">4 = Very Good</label>
+                                </div>
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating3">3 = Good</label>
+                                </div>
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating2">2 = Fair</label>
+                                </div>
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating1">1 = Poor</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+
             <div class="evaluation-form">
                 <h3>Evaluation Form</h3>
                 <form id="evaluationForm" method="post">
