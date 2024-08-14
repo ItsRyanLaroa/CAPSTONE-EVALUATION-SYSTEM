@@ -168,6 +168,24 @@
         .pagination a:hover {
             background-color: #ddd;
         }
+        .icon-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1.2em;
+                margin-right: 5px;
+                text-decoration: none;
+            }
+
+            .view-btn {
+                color: green; /* Change this to the color you prefer */
+            }
+
+            .view-btn:hover {
+                color: darkgreen; /* Change this to the hover color you prefer */
+            }
+
+
     </style>
 </head>
 <body>
@@ -191,34 +209,35 @@
                             <th>Action</th>
                         </tr>
                         <?php
-                        // Fetch data from the database
-                        $servername = "localhost";
-                        $username = "root"; // replace with your database username
-                        $password = ""; // replace with your database password
-                        $dbname = "faculty_db";
+                            // Fetch data from the database
+                            $servername = "localhost";
+                            $username = "root"; // replace with your database username
+                            $password = ""; // replace with your database password
+                            $dbname = "faculty_db";
 
-                        // Create connection
-                        $conn = new mysqli($servername, $username, $password, $dbname);
+                            // Create connection
+                            $conn = new mysqli($servername, $username, $password, $dbname);
 
-                        // Check connection
-                        if ($conn->connect_error) {
-                            die("Connection failed: " . $conn->connect_error);
-                        }
-
-                        $sql = "SELECT id, name FROM classes";
-                        $result = $conn->query($sql);
-
-                        if ($result->num_rows > 0) {
-                            // Output data of each row
-                            while($row = $result->fetch_assoc()) {
-                                echo "<tr><td>" . $row["id"]. "</td><td>" . $row["name"]. "</td><td><a href='ManageStudents.php' class='view'>view</a><button class='icon-btn'><i class='fas fa-edit'></i></button><button class='icon-btn'><i class='fas fa-trash'></i></button></td></tr>";
+                            // Check connection
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
                             }
-                        } else {
-                            echo "<tr><td colspan='3'>No classes found</td></tr>";
-                        }
 
-                        $conn->close();
-                        ?>
+                            $sql = "SELECT id, name FROM classes";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                // Output data of each row
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<tr><td>" . $row["id"]. "</td><td>" . $row["name"]. "</td><td><a href='ManageStudents.php?id=" . $row["id"] . "' class='icon-btn view-btn'><i class='fas fa-eye'></i></a><button class='icon-btn'><i class='fas fa-edit'></i></button><button class='icon-btn'><i class='fas fa-trash'></i></button></td></tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='3'>No classes found</td></tr>";
+                            }
+
+                            $conn->close();
+                            ?>
+
                     </table>
                     <div class="pagination" id="pagination">
                         <a href="#" id="prevPage" onclick="prevPage()">Prev</a>

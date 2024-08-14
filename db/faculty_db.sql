@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2024 at 03:27 PM
+-- Generation Time: Aug 14, 2024 at 05:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -103,10 +103,15 @@ CREATE TABLE `criteria_table` (
 --
 
 CREATE TABLE `evaluations` (
-  `id` int(11) NOT NULL,
-  `teacher_id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `response` tinyint(4) NOT NULL
+  `evaluation_id` int(11) NOT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `student_name` varchar(255) NOT NULL,
+  `department` varchar(255) NOT NULL,
+  `T_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `comments` text DEFAULT NULL,
+  `submission_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `rating` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -143,10 +148,14 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `criteria`, `question`) VALUES
-(72, 'Criteria 101', ' 1. Teacher is prepared for class.\r\n'),
-(73, 'Criteria 101', 'qweqweqweqwe'),
-(76, 'Criteria 101', 'eqwewq'),
-(77, 'Criteria 102', 'ewqewqeqw');
+(89, 'Classroom Management', 'wqeqweqwe2312313'),
+(90, 'Student Outcomes', 'wqeqweqwe2312313wqe'),
+(92, 'Teaching Effectiveness', 'srwewqe'),
+(93, 'Professionalism', 'wqeqwe'),
+(94, 'Teaching Effectiveness', 'wqeqwe'),
+(97, 'Teaching Effectiveness', 'qweqwe123'),
+(99, 'Professionalism', 'wqe123123'),
+(102, 'Professionalism', '213213');
 
 -- --------------------------------------------------------
 
@@ -206,6 +215,27 @@ INSERT INTO `student` (`id`, `name`, `identifier`, `email`, `phone`, `dob`, `gen
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subjects`
+--
+
+CREATE TABLE `subjects` (
+  `subject_id` int(11) NOT NULL,
+  `subject_name` varchar(255) NOT NULL,
+  `T_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`subject_id`, `subject_name`, `T_id`) VALUES
+(1, 'MATH', 2),
+(2, 'Math', 1),
+(3, 'CC101', 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `teachers`
 --
 
@@ -255,9 +285,10 @@ ALTER TABLE `criteria_table`
 -- Indexes for table `evaluations`
 --
 ALTER TABLE `evaluations`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `teacher_id` (`teacher_id`),
-  ADD KEY `question_id` (`question_id`);
+  ADD PRIMARY KEY (`evaluation_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `T_id` (`T_id`),
+  ADD KEY `subject_id` (`subject_id`);
 
 --
 -- Indexes for table `questions`
@@ -278,6 +309,13 @@ ALTER TABLE `student`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `identifier` (`identifier`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`subject_id`),
+  ADD KEY `T_id` (`T_id`);
 
 --
 -- Indexes for table `teachers`
@@ -317,13 +355,13 @@ ALTER TABLE `criteria_table`
 -- AUTO_INCREMENT for table `evaluations`
 --
 ALTER TABLE `evaluations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `staff`
@@ -338,6 +376,12 @@ ALTER TABLE `student`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -345,8 +389,15 @@ ALTER TABLE `student`
 -- Constraints for table `evaluations`
 --
 ALTER TABLE `evaluations`
-  ADD CONSTRAINT `evaluations_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`T_id`),
-  ADD CONSTRAINT `evaluations_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`);
+  ADD CONSTRAINT `evaluations_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`),
+  ADD CONSTRAINT `evaluations_ibfk_2` FOREIGN KEY (`T_id`) REFERENCES `teachers` (`T_id`),
+  ADD CONSTRAINT `evaluations_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`);
+
+--
+-- Constraints for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD CONSTRAINT `subjects_ibfk_1` FOREIGN KEY (`T_id`) REFERENCES `teachers` (`T_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

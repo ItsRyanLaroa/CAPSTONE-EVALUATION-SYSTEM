@@ -11,7 +11,7 @@
         <img class="logo" src="../img/logo.png" />
         <a href="dashboard.php"><i class="fas fa-desktop"></i> Dashboard</a>
         <a href="teacher.php"><i class="fas fa-users"></i> Evalution</a>
-        <a href="profile.php"><i class="fas fa-question-circle"></i> Profile</a>
+
         <hr />
         <a href="confirmLogout.php"><i class="fas fa-sign-out-alt"></i> Log out</a>
     </div>

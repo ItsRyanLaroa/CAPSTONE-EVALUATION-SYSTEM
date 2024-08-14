@@ -50,15 +50,15 @@
       .cardBody {
         padding: 20px;
       }
+      .cardBody i {
+        font-size: 54px;
+        margin-right: 10px; 
+      }
       .card > hr {
         margin-right: 0;
         margin-left: 0;
       }
-      hr {
-        margin-top: 2px;
-        margin-bottom: 2px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-      }
+     
       .colCard {
         flex: 0 0 25%;
         max-width: 22%;
@@ -151,6 +151,10 @@
           max-width: 89%;
         }
       }
+      p{
+        font-size: 20px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      }
     </style>
   </head>
   <body>
@@ -197,7 +201,7 @@
                     <!-- <a class="view" href=" "> View Payments</a> -->
                     <span class="text">View Teacher </span>
                     <div class="right">
-                      <a href="payments.php">
+                      <a href="teacher.php">
                         <i
                           class="fas fa-chevron-right"
                           style="color: black"
@@ -223,7 +227,7 @@
                     <!-- <a class="view" href=" "> View Payments</a> -->
                     <span class="text">View Student </span>
                     <div class="right">
-                      <a href="borrowers.php">
+                      <a href="ManageStudents.php">
                         <i
                           class="fas fa-chevron-right"
                           style="color: black"
@@ -250,7 +254,7 @@
                     <!-- <a class="view" href=" "> View Payments</a> -->
                     <span class="text">View Question</span>
                     <div class="right">
-                      <a href="loans.php">
+                      <a href="questionnaire.php">
                         <i
                           class="fas fa-chevron-right"
                           style="color: black"
@@ -277,7 +281,7 @@
                     <!-- <a class="view" href=" "> View Payments</a> -->
                     <span class="text">View Staff </span>
                     <div class="right">
-                      <a href="savings.php">
+                      <a href="staff.php">
                         <i
                           class="fas fa-chevron-right"
                           style="color: black"

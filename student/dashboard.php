@@ -50,15 +50,15 @@
       .cardBody {
         padding: 20px;
       }
+      .cardBody i {
+        font-size: 54px;
+        margin-right: 10px; 
+      }
       .card > hr {
         margin-right: 0;
         margin-left: 0;
       }
-      hr {
-        margin-top: 2px;
-        margin-bottom: 2px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-      }
+     
       .colCard {
         flex: 0 0 25%;
         max-width: 22%;
@@ -69,11 +69,11 @@
       }
       .payments {
         display: flex;
-        justify-content: space-between; /* Distributes space between items */
+        justify-content: space-between;
         align-items: center;
       }
       .text {
-        color: white;
+        color: black;
         font-size: 16px;
       }
       .totalPayment {
@@ -114,11 +114,11 @@
         margin-bottom: 15px;
         padding: 0px 15px;
         display: flex;
-        color: white;
+        color: black;
         flex-direction: column;
         min-width: 0;
         word-wrap: break-word;
-        background-color: #b31b1b;
+        background-color: #fff;
         background-clip: border-box;
         border: 1px solid rgba(0, 0, 0, 0.301);
         border-radius: 10px;
@@ -150,6 +150,10 @@
           flex: 0 0 100%;
           max-width: 89%;
         }
+      }
+      p{
+        font-size: 20px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       }
     </style>
   </head>

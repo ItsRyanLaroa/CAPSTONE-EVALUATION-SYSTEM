@@ -9,11 +9,36 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <style>
+            .form-group1{
+            margin-bottom: 10px;
+        }
+        .rating-guidelines {
+            display: flex;
+            flex-direction: row;
+            margin-top: 10px;
+            padding: 20px 20px;
+            font-size: 16px;
+            font-family: 'math';
+      
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            margin: 19px;
+
+        }
+
+        .rating-symbol {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
        .questions {
             padding: 10px;
             border-radius: 5px;
             border: 2px black solid;
-            width: 90%;
+            width: 97%;
             margin-left: 5px;
             font-family: sans-serif;
         }
@@ -21,12 +46,29 @@
             background-color: wheat;
             
         }
-        .dropdown{
-
+        .Subject{
             text-align: center;
-            width: 200px;
+            width: 250px;
             height: 30px;
             font-size: 1rem;
+            margin-top: 10px;
+     
+        }
+        .fetch-subjects-btn{
+            text-align: center;
+            width: 100px;
+            height: 30px;
+            font-size: 1rem;
+            background-color: #b31b1b;
+            color: #fff;
+        }
+
+        .dropdown{
+            text-align: center;
+            width: 250px;
+            height: 30px;
+            font-size: 1rem;
+            margin-bottom: 10px;
         }
         .form-group {
             padding: 20px;
@@ -35,6 +77,11 @@
         }
         .form-group1 {
             padding: 10px;
+            border: 1px solid;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-family: 'math';
         }
         .radio-group {
             display: flex;
@@ -59,8 +106,7 @@
 
         .evaluation-form {
             width: 100%;
-            max-width: 600px;
-            margin: 20px auto;
+            max-width: 1700px;
             padding: 20px;
             background-color: #f4f4f4;
             border-radius: 8px;
@@ -122,16 +168,7 @@
             margin-right: 5px;
         }
 
-        .evaluation-form button[type="submit"] {
-            float: right;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-       
-        }
+        
         
         .evaluation-form button[type="submit"]:hover {
             background-color: #0056b3;
@@ -225,12 +262,7 @@
         pointer-events: none;
         }
 
-        .input-container input[type="text"]:focus ~ .label,
-        .input-container input[type="text"]:valid ~ .label {
-        top: -20px;
-        font-size: 16px;
-        color: #333;
-        }
+        
 
         .input-container .underline {
         position: absolute;
@@ -251,7 +283,16 @@
             background-color: red;
             color: black;
             text-align: center;
+            width: 99%;
+            margin-left: 5px;
         }
+        .form-group {
+            padding: 20px;
+
+            margin-bottom: 20px;
+            
+        }
+      
 
     </style>
 </head>
@@ -264,14 +305,15 @@
             <div class="evaluation-form">
                 <h3>Evaluation Form</h3>
                 <br>
-                <form id="evaluationForm" method="post">
+              
+                <form id="evaluationForm" method="post" action="submit_evaluation.php">
                     <div class="input-container">
-                        <input type="text" id="name" required="">
+                        <input type="text" id="name" name="name" required>
                         <label for="name" class="label">Name</label>
                         <div class="underline"></div>
                     </div>
                     <div class="input-container">
-                        <input type="text" id="department" required="">
+                        <input type="text" id="department" name="department" required>
                         <label for="department" class="label">Department & Year</label>
                         <div class="underline"></div>
                     </div>
@@ -279,65 +321,107 @@
                     <!-- Teacher Dropdown -->
                     <?php include 'Teacher_list.php'; ?>
 
-                    <!-- Subject Dropdown -->
-                    <select id="subjectDropdown" class="dropdown">
-                        <option value="">Select a Subject</option>
-                    </select>
+                    <button class="fetch-subjects-btn" id="fetch-subjects-btn" type="button">SELECT</button>
 
+                    <div>
+                        <select class="Subject" id="subject-dropdown" name="subject_id" required>
+                            <option value="" disabled selected>Select a subject</option>
+                        </select>
+                    </div>
+                    <div class="form-group1">
+                            <label for="rating">Faculty Evaluation Rating:</label><br>
+                            <div class="rating-guidelines">
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating5">5 = Excellent</label>
+                                </div>
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating4">4 = Very Good</label>
+                                </div>
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating3">3 = Good</label>
+                                </div>
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating2">2 = Fair</label>
+                                </div>
+                                <div class="rating-item">
+                                    <!-- <span class="rating-symbol">*</span> -->
+                                    <label for="rating1">1 = Poor</label>
+                                </div>
+                            </div>
+                        </div>
+                        
                     <div id="dynamicFields"></div>
 
-                    <textarea name="questions" class="questions" id="questions" rows="8" placeholder="Type your comments here.." required></textarea>
-                    <button class="btn" type="submit">Submit</button>
+                    <textarea name="questions" class="questions" id="questions" rows="8" placeholder="Type your comments here.."></textarea>
+
+                    <div>  
+                        <button class="btn" type="submit">Submit</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
     <script>
-        function toggleMenu() {
-            var x = document.getElementById("mySidenav");
-            if (x.style.width === "250px") {
-                x.style.width = "0";
-            } else {
-                x.style.width = "250px";
-            }
-        }
-
-        function loadQuestions() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'fetch_questions.php', true);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    document.getElementById('dynamicFields').innerHTML = xhr.responseText;
+            function toggleMenu() {
+                var x = document.getElementById("mySidenav");
+                if (x.style.width === "250px") {
+                    x.style.width = "0";
                 } else {
-                    console.error('Failed to load questions.');
+                    x.style.width = "250px";
                 }
-            };
-            xhr.send();
-        }
-
-        window.onload = loadQuestions;
-
-        document.getElementById('teacherDropdown').addEventListener('change', function() {
-    var teacherId = this.value;
-    var subjectDropdown = document.getElementById('subjectDropdown');
-    subjectDropdown.innerHTML = '<option value="">Select a Subject</option>'; // Reset options
-
-    if (teacherId) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'fetch_subjects.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                subjectDropdown.innerHTML = xhr.responseText;
-            } else {
-                console.error('Failed to load subjects.');
             }
-        };
-        xhr.send('teacherId=' + encodeURIComponent(teacherId));
-    }
-});
 
-    </script>
+            function loadQuestions() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'fetch_questions.php', true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        document.getElementById('dynamicFields').innerHTML = xhr.responseText;
+                    } else {
+                        console.error('Failed to load questions.');
+                    }
+                };
+                xhr.send();
+            }
+
+            window.onload = loadQuestions;
+
+            document.getElementById('fetch-subjects-btn').addEventListener('click', function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                var teacherId = document.getElementById('teacher-dropdown').value;
+
+                if (teacherId) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'fetch_subject.php', true);
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var subjects = JSON.parse(xhr.responseText);
+                            var subjectDropdown = document.getElementById('subject-dropdown');
+
+                            // Clear the subject dropdown
+                            subjectDropdown.innerHTML = "<option value='' disabled selected>Select a subject</option>";
+
+                            // Populate the subject dropdown with new options
+                            subjects.forEach(function(subject) {
+                                var option = document.createElement('option');
+                                option.value = subject.subject_id;
+                                option.textContent = subject.subject_name;
+                                subjectDropdown.appendChild(option);
+                            });
+                        }
+                    };
+                    xhr.send('T_id=' + teacherId);
+                } else {
+                    alert("Please select a teacher first.");
+                }
+            });
+</script>
 </body>
 </html>

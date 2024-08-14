@@ -9,31 +9,43 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <style>
         .row3 {
-        display: flex;
-        flex-wrap: wrap;
-        background-color: #f8f9fa;
-        border: 2px solid rgba(0, 0, 0, 0.125);
-        border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
         }
-        .card3 table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        .card3 th, .card3 td {
+        .card3 {
+            background-color: white;
             border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            margin: 10px;
         }
-        .card3 th {
-            background-color: #f2f2f2;
+        .card3 h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+        .card3 p {
+            margin: 5px 0;
+            font-size: 1em;
+            color: #666;
+        }
+        .card3 .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
         }
         .icon-btn {
             background: none;
             border: none;
             cursor: pointer;
             font-size: 1.2em;
-            margin-right: 5px;
         }
         .icon-btn .fa-edit {
             color: blue;
@@ -41,115 +53,86 @@
         .icon-btn .fa-trash {
             color: red;
         }
+        .icon-btn .fa-plus {
+            color: green;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+        .search-container input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 300px;
+        }
+        .search-container button {
+            padding: 10px;
+            border: none;
+            background-color: #1875FF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Modal styles */
         .modal {
-            display: none;
+            display: none; /* Hidden by default */
             position: fixed;
-            z-index: 1;
-            padding-top: 60px;
+            z-index: 1000; /* Ensure it appears above other content */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
         }
+        
         .modal-content {
-            background-color: #ffff;
-            margin: 65px auto;
-            padding: 40px;
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
             border: 1px solid #888;
-            width: 300px;
-            height: 45vh;
-            border-radius: 4px;
-            overflow: hidden;
-           
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%); 
+            height: 20vh;
         }
+        
         .close {
-            color: red;
+            color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
+        
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
-       
-        .input{
+        
+        .input {
             border-radius: 4px;
             padding: 10px;
-            width: 270px;
+            width: 93%;
             margin-bottom: 10px;
-            overflow: hidden;
-     
         }
+        
         .button {
-        display: inline-block;
-        border-radius: 7px;
-        border: none;
-        background: #1875FF;
-        color: white;
-        font-family: inherit;
-        text-align: center;
-        font-size: 13px;
-        box-shadow: 0px 14px 56px -11px #1875FF;
-        width: 10em;
-        padding: 1em;
-        transition: all 0.4s;
-        cursor: pointer;
-        float:right;
-        margin:10px;
-        }
-
-        /* .button span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.4s;
-        }
-
-        .button span:after {
-        content: 'for free';
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        right: -20px;
-        transition: 0.7s;
-        }
-
-        .button:hover span {
-        padding-right: 3.55em;
-        }
-
-        .button:hover span:after {
-        opacity: 4;
-        right: 0;
-        } */
-        .text{
-            margin-bottom:5px;
-        }
-        .pagination {
-            display: flex;
-            justify-content: right;
-            margin-top: 20px;
-        }
-        .pagination a {
-            margin: 0 5px;
-            padding: 10px 20px;
-            border: 1px solid rgb(0,0,0) ;
-            text-decoration: none;
-            color: #333;
-        }
-        .pagination a.active {
-            background-color: #1875FF;
+            border-radius: 7px;
+            border: none;
+            background: #1875FF;
             color: white;
-            border: 1px solid #1875FF;
-        }
-        .pagination a:hover {
-            background-color: #ddd;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 30%;
+            float: right;
         }
     </style>
 </head>
@@ -159,159 +142,120 @@
     <div class="main content">
         <h2>Teacher List</h2>
         <hr>
-        <div class="row3">
-            <div class="column3">
-                <div class="card3">
-                    <button class="btn" id="addTeacherBtn">+Add New</button>
-                    <div class="search-container">
-                        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for teachers..">
-                        <button onclick="searchTable()"><i class="fas fa-search"></i></button>
-                    </div>
-                    <table id="teacherTable">
-                    <tr style="border: 3px black solid;/* background-color: #333; */padding: 20px;">
-                            <th>No.</th>
-                            <th>Last Name</th>
-                            <th>First Name</th>                          
-                            <th>Action</th>
-                        </tr>
-                        <?php
-                        // Fetch data from the database
-                        $servername = "localhost";
-                        $username = "root"; // replace with your database username
-                        $password = ""; // replace with your database password
-                        $dbname = "faculty_db";
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="searchCards()" placeholder="Search for teachers..">
+            <button onclick="searchCards()"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="row3" id="teacherCards">
+            <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "faculty_db";
 
-                        // Create connection
-                        $conn = new mysqli($servername, $username, $password, $dbname);
+            $conn = new mysqli($servername, $username, $password, $dbname);
 
-                        // Check connection
-                        if ($conn->connect_error) {
-                            die("Connection failed: " . $conn->connect_error);
-                        }
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
 
-                        $sql = "SELECT T_id, firstname, lastname FROM teachers";
-                        $result = $conn->query($sql);
+            $sql = "SELECT T_id, firstname, lastname FROM teachers";
+            $result = $conn->query($sql);
 
-                        if ($result->num_rows > 0) {
-                            // Output data of each row
-                            while($row = $result->fetch_assoc()) {
-                                echo "<tr><td>" . $row["T_id"]. "</td><td>". $row["lastname"]. "</td><td>". $row["firstname"]. "</td><td><button class='icon-btn'><i class='fas fa-edit'></i></button><button class='icon-btn'><i class='fas fa-trash'></i></button></td></tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='3'>No classes found</td></tr>";
-                        }
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<div class='card3'>
+                            <h3>" . $row["lastname"] . ", " . $row["firstname"] . "</h3>
+                            <p>ID: " . $row["T_id"] . "</p>
+                            <div class='action-buttons'>
+                                <button class='icon-btn'><i class='fas fa-edit'></i></button>
+                                <button class='icon-btn'><i class='fas fa-trash'></i></button>
+                                <button class='icon-btn add-subject-btn' data-teacher-id='" . $row["T_id"] . "'><i class='fas fa-plus'></i> Add Subject</button>
+                            </div>
+                          </div>";
+                }
+            } else {
+                echo "<p>No teachers found</p>";
+            }
 
-                        $conn->close();
-                        ?>
-                    </table>
-                    <div class="pagination" id="pagination">
-                        <a href="#" id="prevPage" onclick="prevPage()">Prev</a>
-                        <span id="pageInfo"></span>
-                        <a href="#" id="nextPage" onclick="nextPage()">Next</a>
-                    </div>
-                </div>
-            </div>
+            $conn->close();
+            ?>
         </div>
     </div>
 
-    <!-- Modal for adding new teacher -->
-    <div id="addTeacherModal" class="modal">
+    <!-- Modal for adding a subject -->
+    <div id="addSubjectModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Add New Teacher</h2>
+            <h2>Add Subject</h2>
             <hr>
-            <form id="addTeacherForm">
-                <input class="input" type="text" id="firstname" name="firstname" placeholder="First Name" required>
-                <input class="input" type="text" id="lastname" name="lastname" placeholder="Last Name" required>
-                <input class="input" type="text" id="id" name="id" placeholder="ID" required>
-                <button class="button" type="submit" style="vertical-align:middle"><span>Save</span></button>
+            <form id="addSubjectForm">
+                <input type="hidden" id="teacherId" name="teacherId">
+                <input class="input" type="text" id="subjectName" name="subjectName" placeholder="Subject Name" required>
+                <button class="button" type="submit">Save</button>
             </form>
         </div>
     </div>
 
     <script>
-        var modal = document.getElementById("addTeacherModal");
-        var btn = document.getElementById("addTeacherBtn");
-        var span = document.getElementsByClassName("close")[0];
-        var form = document.getElementById("addTeacherForm");
+        // Modal elements
+        var addSubjectModal = document.getElementById("addSubjectModal");
+        var addSubjectForm = document.getElementById("addSubjectForm");
+        var subjectModalClose = document.getElementsByClassName("close")[0];
+        var teacherIdInput = document.getElementById("teacherId");
 
-        btn.onclick = function() {
-            modal.style.display = "block";
+        // Event listener for "Add Subject" buttons
+        document.querySelectorAll(".add-subject-btn").forEach(function(button) {
+            button.addEventListener("click", function() {
+                var teacherId = this.getAttribute("data-teacher-id");
+                teacherIdInput.value = teacherId; // Set the teacher ID in the hidden input
+                addSubjectModal.style.display = "block"; // Show the modal
+            });
+        });
+
+        // Close the modal when the user clicks the close button
+        subjectModalClose.onclick = function() {
+            addSubjectModal.style.display = "none";
         }
 
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
+        // Close the modal when the user clicks outside of it
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == addSubjectModal) {
+                addSubjectModal.style.display = "none";
             }
         }
 
-        form.onsubmit = function(event) {
+        // Handle the form submission for adding a subject
+        addSubjectForm.onsubmit = function(event) {
             event.preventDefault();
-            var firstname = document.getElementById("firstname").value;
-            var lastname = document.getElementById("lastname").value;
-            var id = document.getElementById("id").value;
+            var teacherId = document.getElementById("teacherId").value;
+            var subjectName = document.getElementById("subjectName").value;
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "add_teacher.php", true);
+            xhr.open("POST", "add_subject.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    var newTeacher = JSON.parse(xhr.responseText);
-                    addTeacherToTable(newTeacher.id, newTeacher.firstname, newTeacher.lastname);
-                    modal.style.display = "none";
-                    form.reset();
+                    addSubjectModal.style.display = "none";
+                    addSubjectForm.reset();
+                    alert("Subject added successfully");
                 }
             }
-            xhr.send("firstname=" + firstname + "&lastname=" + lastname + "&id=" + id);
+            xhr.send("T_id=" + teacherId + "&subject_name=" + subjectName);
         }
 
-        function addTeacherToTable(id, firstname, lastname) {
-            var table = document.getElementById("teacherTable");
-            var rowCount = table.rows.length;
-            var row = table.insertRow(rowCount);
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-            var cell5 = row.insertCell(4);
+        // Function to search for teachers in the card layout
+        function searchCards() {
+            var input = document.getElementById("searchInput");
+            var filter = input.value.toLowerCase();
+            var cards = document.getElementById("teacherCards").getElementsByClassName("card3");
 
-            cell1.innerHTML = rowCount;
-            cell2.innerHTML = firstname;
-            cell3.innerHTML = lastname;
-            cell4.innerHTML = id;
-            cell5.innerHTML = '<button class="icon-btn"><i class="fas fa-edit"></i></button><button class="icon-btn"><i class="fas fa-trash"></i></button>';
-        }
-        function toggleMenu() {
-            var x = document.getElementById("mySidenav");
-            if (x.style.width === "250px") {
-                x.style.width = "0";
-            } else {
-                x.style.width = "250px";
-            }
-        }
-
-        function searchTable() {
-            // Function to filter table rows based on search input
-            var input, filter, table, tr, td, i, j, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.querySelector(".card3 table");
-            tr = table.getElementsByTagName("tr");
-
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "none";
-                td = tr[i].getElementsByTagName("td");
-                for (j = 0; j < td.length; j++) {
-                    if (td[j]) {
-                        txtValue = td[j].textContent || td[j].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                            break;
-                        }
-                    }
+            for (var i = 0; i < cards.length; i++) {
+                var card = cards[i];
+                var h3 = card.getElementsByTagName("h3")[0];
+                if (h3.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
                 }
             }
         }

@@ -8,19 +8,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <style>
-       
-        .card3 table {
-            width: 100%;
-            border-collapse: collapse;
+        .staff-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
             margin-top: 10px;
         }
-        .card3 th, .card3 td {
+        .staff-card {
+            background-color: white;
             border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 247px;
+            margin: 10px;
+            position: relative;
         }
-        .card3 th {
-            background-color: #f2f2f2;
+        .staff-card h3 {
+            margin: 0 0 10px;
+            font-family: math;
+            font-size: 20px;
+        }
+        .staff-card p {
+            margin: 5px 0;
+        }
+        .staff-card .actions {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
         }
         .icon-btn {
             background: none;
@@ -115,12 +130,17 @@
             background-color: #ddd;
         }
         .row3 {
-        display: flex;
-        flex-wrap: wrap;
-        background-color: #f8f9fa;
-        border: 2px solid rgba(0, 0, 0, 0.125);
-        border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #f8f9fa;
+            border: 2px solid rgba(0, 0, 0, 0.125);
+            border-radius: 10px;
         }
+        .header{
+            width: 100%;
+            padding: 20px;
+        }
+      
     </style>
 </head>
 <body>
@@ -130,27 +150,18 @@
         <h2>Staff List</h2>
         <hr>
         <div class="row3">
-            <div class="column3">
-                <div class="card3">
-                    <button class="btn" id="addStaffBtn">+Add New</button>
+       <div class="header">
+         <button class="btn" id="addStaffBtn">+Add New</button>
                     <div class="search-container">
                         <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for staff..">
                         <button onclick="searchTable()"><i class="fas fa-search"></i></button>
+                    </div></div>
+            <div class="column3">
+                <div class="card3">
+                 
+                    <div class="staff-cards" id="staffCards">
+                        <!-- Staff cards will be loaded here via JavaScript -->
                     </div>
-                    <table id="staffTable">
-                        <thead>
-                            <tr style="border: 3px black solid;">
-                                <th>No.</th>
-                                <th>Role</th>
-                                <th>Last Name</th>
-                                <th>First Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="staffTableBody">
-                            <!-- Data will be loaded here via AJAX -->
-                        </tbody>
-                    </table>
                     <div class="pagination" id="pagination">
                         <a href="#" id="prevPage" onclick="prevPage()">Prev</a>
                         <span id="pageInfo"></span>
@@ -216,7 +227,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var newStaff = JSON.parse(xhr.responseText);
-                    addStaffToTable(newStaff.id, newStaff.role, newStaff.firstname, newStaff.lastname);
+                    addStaffToCards(newStaff.id, newStaff.role, newStaff.firstname, newStaff.lastname);
                     modal.style.display = "none";
                     form.reset();
                 }
@@ -230,20 +241,27 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
-                    var staffTableBody = document.getElementById("staffTableBody");
+                    var staffCards = document.getElementById("staffCards");
                     var pageInfo = document.getElementById("pageInfo");
 
-                    // Clear existing table rows
-                    staffTableBody.innerHTML = "";
+                    // Clear existing cards
+                    staffCards.innerHTML = "";
 
-                    // Add new rows to the table
+                    // Add new cards
                     response.staff.forEach(function (staff) {
-                        var row = staffTableBody.insertRow();
-                        row.insertCell(0).innerHTML = staff.S_id;
-                        row.insertCell(1).innerHTML = staff.role;
-                        row.insertCell(2).innerHTML = staff.lastname;
-                        row.insertCell(3).innerHTML = staff.firstname;
-                        row.insertCell(4).innerHTML = '<button class="icon-btn"><i class="fas fa-edit"></i></button><button class="icon-btn"><i class="fas fa-trash"></i></button>';
+                        var card = document.createElement("div");
+                        card.className = "staff-card";
+                        card.innerHTML = `
+                            <h3>${staff.role}</h3>
+                            <p><strong>Last Name:</strong> ${staff.lastname}</p>
+                            <p><strong>First Name:</strong> ${staff.firstname}</p>
+                            <p><strong>ID:</strong> ${staff.S_id}</p>
+                            <div class="actions">
+                                <button class="icon-btn"><i class="fas fa-edit"></i></button>
+                                <button class="icon-btn"><i class="fas fa-trash"></i></button>
+                            </div>
+                        `;
+                        staffCards.appendChild(card);
                     });
 
                     // Update pagination info
@@ -269,6 +287,40 @@
             if (currentPage < totalPages) {
                 loadStaff(currentPage + 1);
             }
+        }
+
+        function searchTable() {
+            var input, filter, cards, card, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            cards = document.getElementsByClassName("staff-card");
+
+            for (i = 0; i < cards.length; i++) {
+                card = cards[i];
+                txtValue = card.textContent || card.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    card.style.display = "";
+                } else {
+                    card.style.display = "none";
+                }
+            }
+        }
+
+        function addStaffToCards(id, role, firstname, lastname) {
+            var staffCards = document.getElementById("staffCards");
+            var card = document.createElement("div");
+            card.className = "staff-card";
+            card.innerHTML = `
+                <h3>${role}</h3>
+                <p><strong>Last Name:</strong> ${lastname}</p>
+                <p><strong>First Name:</strong> ${firstname}</p>
+                <p><strong>ID:</strong> ${id}</p>
+                <div class="actions">
+                    <button class="icon-btn"><i class="fas fa-edit"></i></button>
+                    <button class="icon-btn"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            staffCards.appendChild(card);
         }
     </script>
 </body>

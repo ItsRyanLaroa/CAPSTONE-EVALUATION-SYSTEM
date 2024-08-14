@@ -12,7 +12,7 @@
         <a href="admin.php"><i class="fas fa-desktop"></i> Dashboard</a>
         <a href="classes.php"><i class="fas fa-users"></i> Student</a>
         <a href="year.php"><i class="fas fa-calendar"></i> Academic Year</a>
-        <a href="questionYear.php"><i class="fas fa-question-circle"></i> Questioner</a>
+        <a href="questionnaire.php"><i class="fas fa-question-circle"></i> Questioner</a>
         <a href="teacher.php"><i class="fas fa-check-circle"></i> Teacher</a>
         <a href="staff.php"><i class="fas fa-user-tie"></i> Staff</a>
         <a href="reports.php"><i class="fas fa-folder-open"></i> Reports</a>
